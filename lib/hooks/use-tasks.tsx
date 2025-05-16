@@ -51,6 +51,37 @@ export const TasksProvider = ({ children }: { children: ReactNode }) => {
       addTask(title);
     },
   });
+  useCopilotAction({
+    name: "editTask",
+    description: "edit a task on the todo list",
+    parameters: [
+      {
+        name: "id",
+        type: "number",
+        description: "The id of the task",
+        required: true,
+      },
+      {
+        name: "title",
+        type: "string",
+        description: "The title of the task",
+        required: true,
+      },
+    ],
+    handler: ({ id, title }) => {
+      setTasks(
+        tasks.map((item) => {
+          if (item.id === id) {
+            return { ...item, title };
+          } else {
+            return item;
+          }
+        })
+      );
+    },
+  });
+
+  
  
   useCopilotAction({
     name: "deleteTask",
